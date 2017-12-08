@@ -3,6 +3,7 @@ package facture;
 public class Client {
  
     private String address;
+    private String name;
 
     public Client(String name, String address) {
         this.address = address;
@@ -27,7 +28,6 @@ public class Client {
         this.address = address;
     }
    
-    private String name;
 
     /**
      * Get the value of name

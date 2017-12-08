@@ -25,9 +25,8 @@ public class FactureTest {
 		catalogue.addArticle(iPad);
 
 		bastide = new Client("Rémi Bastide", "Rue du Bac, Castres");
-		Date dateDuJour = new Date();
 		int numeroFacture = 345;
-		f = new Facture(bastide, dateDuJour, numeroFacture);
+		f = new Facture(bastide, new Date(2017,12,12), numeroFacture);
 		f.ajouteLigne(iPad, 1, 0f); // 700€, 0% de remise
 		f.ajouteLigne(disk, 5, 0.1f); //5*100€, 10% de remise
 
@@ -44,7 +43,28 @@ public class FactureTest {
 		float tva = 0.2f;
 		float expected = (1*iPad.getPrix() + 5*disk.getPrix()*(0.9f)) * (1+tva);
 		assertEquals(expected, f.montantTTC(tva), 0.001f);
-		
+                
+        }
+        
+        @Test
+        public void testGetteur(){
+            assertEquals(345, f.getNumero());
+            assertEquals(new Date(2017,12,12), f.getEmission());
+            assertEquals(bastide,f.getDestinataire());
+            assertEquals("Rémi Bastide", bastide.getName());
+            assertEquals("Rue du Bac, Castres", bastide.getAddress());
+            assertEquals("Disque 2To",disk.getNom());
+            assertEquals("disk", disk.getCode());
+        }
+        @Test
+        public void testLigneFacture(){
+            LigneFacture lf = new LigneFacture(10, f, disk, 0.2f);
+            assertEquals(10, lf.getNombre());
+            assertEquals(f, lf.getFigureDans());
+            assertEquals(disk, lf.getArticleFacture());
+            assertEquals(0.2, lf.getTauxRemise(), 0.1 );
+            
+            }
+        
 
-	}
 }
